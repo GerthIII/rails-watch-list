@@ -17,9 +17,7 @@ Bookmark.destroy_all
 # 2. NOW DELETE THE PARENTS
 # Now that no bookmarks exist, the DB will let you delete these
 Movie.destroy_all
-List.all.each do |list|
-  list.photo.purge if list.respond_to?(:photo) && list.photo.attached? # Optional: clean up images
-end
+
 List.destroy_all
 
 puts "Database clean! Creating new seeds..."
@@ -57,10 +55,5 @@ suspense = List.create!(name: "Suspense")
 
 # 2. Create a Bookmark to link a movie to that list
 # Note: We find the movie by title since we know it exists in the seeds
-Bookmark.create!(
-  comment: "A classic tear-jerker.",
-  list: drama,
-  movie: Movie.find_by(title: "Titanic")
-)
 
 puts "Created 'Drama' list with Titanic bookmarked!"
