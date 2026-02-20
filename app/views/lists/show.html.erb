@@ -1,17 +1,18 @@
 <div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-end">
-    <h1><%= @list.name %></h1>
-    <%= link_to new_list_bookmark_path(@list), class: "btn btn-primary" do %>
-      <i class="fa-solid fa-plus"></i>
-    <% end %>
+  <div class="banner-hero mb-4" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= @list.photo.attached? ? cl_image_path(@list.photo.key) : "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200" %>');">
+    <div class="container text-center py-5">
+      <h1 class="display-2 fw-bold text-white"><%= @list.name %></h1>
+      <div class="mt-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Add a movie
+        </button>
+        <%= link_to lists_path, class: "btn btn-outline-light rounded-pill shadow-sm" do %>
+          <i class="fa-solid fa-house me-2"></i> Back to Lists
+        <% end %>
+      </div>
+    </div>
   </div>
   <%#= image_tag source, alt: "text" %>
-  <% if @list.photo.attached? %>
-    <%= cl_image_tag @list.photo.key, width: 400, height: 300, crop: :fill %>
-  <% else %>
-    <%# Optional: Show a placeholder if no photo exists %>
-    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400" alt="default cover">
-  <% end %>
   <div class="cards mb-5">
     <% @list.bookmarks.each do |bookmark| %>
       <div class="card" style="width: 18rem;">
@@ -26,11 +27,17 @@
       </div>
     <% end %>
   </div>
-  <div class="col-4">
-    <h3>Add a movie</h3>
-    <%= render "bookmarks/form", list: @list, bookmark: @bookmark %>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Add a movie</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render "bookmarks/form", list: @list, bookmark: @bookmark %>
+        </div>
+      </div>
+    </div>
   </div>
-  <%= link_to lists_path, class: "btn btn-secondary" do %>
-    <i class="fa-solid fa-house"></i>
-  <% end %>
 </div>
