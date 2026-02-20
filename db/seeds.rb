@@ -7,6 +7,23 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+puts "Cleaning database..."
+
+# 1. DELETE THE CHILDREN FIRST (The Bridge)
+# This removes the foreign key references so the parents are "free"
+Bookmark.destroy_all
+
+# 2. NOW DELETE THE PARENTS
+# Now that no bookmarks exist, the DB will let you delete these
+Movie.destroy_all
+List.all.each do |list|
+  list.photo.purge if list.respond_to?(:photo) && list.photo.attached? # Optional: clean up images
+end
+List.destroy_all
+
+puts "Database clean! Creating new seeds..."
+
 require 'open-uri'
 puts "Cleaning the DB...."
 Movie.destroy_all
