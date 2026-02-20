@@ -11,17 +11,24 @@
   <% else %>
     <%# Optional: Show a placeholder if no photo exists %>
     <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400" alt="default cover">
-  <% end %>  
+  <% end %>
   <div class="cards mb-5">
     <% @list.bookmarks.each do |bookmark| %>
       <div class="card" style="width: 18rem;">
         <%= image_tag bookmark.movie.poster_url, alt: "text" %>
         <div class="card-body">
           <h5 class="card-title"><%= bookmark.movie.title %></h5>
+          <%= link_to bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+            <i class="fa-solid fa-trash-can text-danger"></i>
+          <% end %>
           <p class="card-text"><%= bookmark.comment %></p>
         </div>
       </div>
     <% end %>
+  </div>
+  <div class="col-4">
+    <h3>Add a movie</h3>
+    <%= render "bookmarks/form", list: @list, bookmark: @bookmark %>
   </div>
   <%= link_to lists_path, class: "btn btn-secondary" do %>
     <i class="fa-solid fa-house"></i>

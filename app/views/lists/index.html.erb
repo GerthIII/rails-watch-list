@@ -4,8 +4,32 @@
     <% @lists.each do |list| %>
       <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= list.photo.attached? ? cl_image_path(list.photo.key) : 'https://happiclap.com/wp-content/uploads/2019/06/Everyday-Clapboard-1.jpg' %>)">
         <%= link_to list.name, list_path(list), class: "text-white text-decoration-none" %>
+        <%= link_to list_path(list), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+          <i class="fa-solid fa-trash-can text-danger"></i>
+        <% end %>
       </div>
     <% end %>
   </div>
-  <%= link_to "Add List", new_list_path, class: "btn btn-primary" %>
+  <!--<%= link_to "Add List", new_list_path, class: "btn btn-primary" %>-->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Create a List
+  </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Create a List</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for @list do |f| %>
+          <%= f.input :name %>
+          <%= f.input :photo, as: :file %>
+          <%= f.submit class: "btn btn-primary mt-3" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

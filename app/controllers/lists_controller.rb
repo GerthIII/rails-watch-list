@@ -1,6 +1,7 @@
 class ListsController < ApplicationController
   def index
     @lists = List.all
+    @list = List.new
   end
 
   def new
@@ -9,6 +10,7 @@ class ListsController < ApplicationController
 
   def show
     @list = List.find(params[:id])
+    @bookmark = Bookmark.new
   end
 
   def create
@@ -18,6 +20,13 @@ class ListsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @list = List.find(params[:id])# Save the list reference before deleting
+    @list.destroy
+    # Redirect back to the show page with the 'see_other' status for Turbo
+    redirect_to lists_path, status: :see_other
   end
 
   private
