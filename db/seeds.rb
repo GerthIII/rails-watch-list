@@ -57,3 +57,13 @@ suspense = List.create!(name: "Suspense")
 # Note: We find the movie by title since we know it exists in the seeds
 
 puts "Created 'Drama' list with Titanic bookmarked!"
+
+list = List.create(name: 'Comedy')
+photo = URI.parse("https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQaUiPLJpaxXAL-CGwnV-UUKic7arMB-yY4SY7enUbFgSksNG0BClmStlVX4vJO7EIkOODAr7zgP5aO0sPt3iG3XKNVEfbyLY-xQ4bMpzVHHRkSziQ5MnueXkDn4VXT2RfN7C4QEgg-2OvnrRVTfNluW7.jpg?r=936").open
+list.photo.attach(io: photo, filename: "photo.png", content_type: "image/png")
+list.save
+
+list = List.create(name: 'Action')
+photo = URI.parse("https://deadline.com/wp-content/uploads/2025/05/Rambo-First-Blood.webp?w=681&h=383&crop=1").open
+list.photo.attach(io: photo, filename: "photo.png", content_type: "image/png")
+list.save

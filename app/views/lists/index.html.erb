@@ -1,11 +1,11 @@
-<div class="lists">
-  <h1><strong>Lists</strong></h1>
-  <ul>
+<div class="container">
+  <h1>Movie Lists</h1>
+  <div class="cards">
     <% @lists.each do |list| %>
-      <li>
-        <%= list.name %> <%= link_to "View", list_path(list), class: "btn btn-primary btn-sm" %>
-      </li>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
+        <%= link_to list.name, list_path(list), class: 'text-white text-decoration-none' %>
+      </div>
     <% end %>
-  </ul>
+  </div>
+  <%= link_to "Add List", new_list_path, class: "btn btn-primary" %>
 </div>
-<%= link_to "Add List", new_list_path, class: "btn btn-primary" %>
