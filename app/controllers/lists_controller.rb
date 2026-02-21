@@ -2,6 +2,7 @@ class ListsController < ApplicationController
   def index
     @lists = List.all
     @list = List.new
+    @popular_movies = Movie.limit(15)
   end
 
   def new

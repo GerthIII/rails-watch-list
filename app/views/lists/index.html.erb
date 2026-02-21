@@ -1,5 +1,34 @@
 <div class="container">
-  <h1>Movie Lists</h1>
+  <h1 class="d-flex justify-content-center m-3">Greatest Hits</h1>
+  <div id="popularMoviesCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @popular_movies.each_with_index do |movie, index| %>
+        <%# The first item MUST have the 'active' class for the carousel to work %>
+        <div class="carousel-item <%= 'active' if index == 0 %>">
+          <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('<%= movie.poster_url %>'); height: 400px; background-size: cover; background-position: center;">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center text-white">
+              <h2 class="display-4 fw-bold"><%= movie.title %></h2>
+              <p class="lead w-50 text-center"><%= movie.overview %></p>
+              <span class="badge bg-warning text-dark"><i class="fa-solid fa-star"></i> <%= movie.rating %></span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <%# Navigation Controls %>
+    <button class="carousel-control-prev" type="button" data-bs-target="#popularMoviesCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#popularMoviesCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="d-flex justify-content-between">
+    <h1 class="d-flex justify-content-center mb-3">Movie Lists</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Create a List
+    </button>
+  </div>
   <div class="cards">
     <% @lists.each do |list| %>
       <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= list.photo.attached? ? cl_image_path(list.photo.key) : 'https://happiclap.com/wp-content/uploads/2019/06/Everyday-Clapboard-1.jpg' %>)">
@@ -11,9 +40,6 @@
     <% end %>
   </div>
   <!--<%= link_to "Add List", new_list_path, class: "btn btn-primary" %>-->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Create a List
-  </button>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
